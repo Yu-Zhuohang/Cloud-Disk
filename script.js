@@ -1,16 +1,34 @@
-const GITHUB_TOKEN = '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';
-const REPO_OWNER = 'Yu-Zhuohang';
-const REPO_NAME = 'Files-Download';
+let GITHUB_TOKEN;
+let REPO_OWNER;
+let REPO_NAME;
 let currentPath = '';
 let allFiles = [];
 let originalAllFiles = [];
 let uploadQueue = [];
 
-window.addEventListener('load', function () {
+async function getGitHubToken() {
+    try {
+        const response = await fetch('config.json');
+        if (!response.ok) {
+            throw new Error('Failed to load config.json');
+        }
+        const config = await response.json();
+        GITHUB_TOKEN = config.GITHUB_TOKEN;
+        REPO_OWNER = config.REPO_OWNER;
+        REPO_NAME = config.REPO_NAME;
+    } catch (error) {
+        alert(`Error loading GitHub token: ${error.message}`);
+    }
+}
+
+window.addEventListener('load', async function () {
     const nav = document.querySelector('nav');
     const uploadArea = document.querySelector('.upload-area');
     const navHeight = nav.offsetHeight;
     uploadArea.style.marginTop = navHeight + 'px';
+
+    await getGitHubToken();
+    await init();
 });
 
 function generateId() {
@@ -613,4 +631,4 @@ function previewFile(path) {
     }
 }
 
-init();
+
