@@ -1,4 +1,4 @@
-const GITHUB_TOKEN = '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';
+const GITHUB_TOKEN = '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';
 const REPO_OWNER = 'Yu-Zhuohang';
 const REPO_NAME = 'Files-Download';
 let currentPath = '';
