@@ -124,6 +124,10 @@ button {
     transition: opacity 0.3s;
 }
 
+button:hover {
+    background: #723da7;
+}
+
 .list-item.uploading .file-icon {
     color: var(--main-color);
 }
