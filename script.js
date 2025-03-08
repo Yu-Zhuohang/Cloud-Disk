@@ -558,8 +558,26 @@ async function downloadFile(path) {
     }
 }
 
+// 添加密码验证相关变量
+let passwordVerified = false;
+let passwordVerifiedTime = 0;
+
+// 修改 deleteItem 函数
 async function deleteItem(path, sha) {
     if (!confirm(`确定要删除 ${path.split('/').pop()} 吗？`)) return;
+
+    // 检查是否需要验证密码
+    const now = Date.now();
+    const thirtyMinutes = 30 * 60 * 1000;
+    if (!passwordVerified || now - passwordVerifiedTime > thirtyMinutes) {
+        const password = prompt('请输入删除密码：');
+        if (password !== '123456') {
+            alert('密码错误或已取消，删除操作未执行。');
+            return;
+        }
+        passwordVerified = true;
+        passwordVerifiedTime = now;
+    }
 
     try {
         const response = await fetch(
@@ -626,7 +644,7 @@ async function deleteItem(path, sha) {
         await loadFiles(currentPath);
         alert('删除成功！');
     } catch (error) {
-        // alert(`删除失败: ${error.message}`);
+        alert(`删除失败: ${error.message}`);
     }
 }
 
