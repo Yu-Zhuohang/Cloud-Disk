@@ -8,7 +8,7 @@ let uploadQueue = [];
 
 async function getGitHubToken() {
     try {
-        const response = await fetch('config.json');
+        const response = await fetch('https://gexinbiotec-0gbtt1hl2ccf18f0-1331099027.tcloudbaseapp.com/xxx/config.json');
         if (!response.ok) {
             throw new Error('Failed to load config.json');
         }
