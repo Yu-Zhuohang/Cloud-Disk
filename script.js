@@ -6,14 +6,24 @@ let allFiles = [];
 let originalAllFiles = [];
 let uploadQueue = [];
 
+function hexToAscii(hex) {
+    const hexWithoutSpaces = hex.replace(/\s/g, '');
+    let ascii = '';
+    for (let i = 0; i < hexWithoutSpaces.length; i += 2) {
+        const byte = parseInt(hexWithoutSpaces.substr(i, 2), 16);
+        ascii += String.fromCharCode(byte);
+    }
+    return ascii;
+}
+
 async function getGitHubToken() {
     try {
-        const response = await fetch('https://gexinbiotec-0gbtt1hl2ccf18f0-1331099027.tcloudbaseapp.com/xxx/config.json');
+        const response = await fetch('config.json');
         if (!response.ok) {
             throw new Error('Failed to load config.json');
         }
         const config = await response.json();
-        GITHUB_TOKEN = config.GITHUB_TOKEN;
+        GITHUB_TOKEN = hexToAscii(config.GITHUB_TOKEN);
         REPO_OWNER = config.REPO_OWNER;
         REPO_NAME = config.REPO_NAME;
     } catch (error) {
