@@ -680,3 +680,8 @@ function previewFile(path) {
         alert('不支持预览此文件类型，请下载后打开。');
     }
 }
+
+const refreshIcon = document.getElementById('refresh-icon');
+refreshIcon.addEventListener('click', function () {
+    location.reload();
+});
