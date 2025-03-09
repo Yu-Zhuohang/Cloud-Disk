@@ -652,13 +652,14 @@ async function deleteItem(path, sha) {
 
 function previewFile(path) {
     const ext = path.split('.').pop().toLowerCase();
-    const supportedFormats = ['png', 'jpg', 'jpeg', 'gif', 'bmp'];
-
+    const supportedFormats = ['pdf', 'txt', 'png', 'jpg', 'jpeg'];
     if (supportedFormats.includes(ext)) {
-        window.open(`https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/main/${path}`, '_blank');
+        const fileName = path.split('/').pop();
+        const parts = path.split(fileName);
+        const folderPath = parts.length > 1 ? parts[0] : '';
+        const previewUrl = `https://${REPO_OWNER}.github.io/${REPO_NAME}/${folderPath}${fileName}`;
+        window.open(previewUrl, '_blank');
     } else {
         alert('不支持预览此文件类型，请下载后打开。');
     }
 }
-
-
