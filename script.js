@@ -189,7 +189,9 @@ async function flattenFiles(contents) {
 }
 
 async function loadFiles(path) {
+    const loader = document.querySelector('.loading-overlay');
     try {
+        loader.classList.add('active'); // 显示加载动画
         const response = await fetch(
             `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}`,
             {
@@ -214,9 +216,11 @@ async function loadFiles(path) {
 
         originalAllFiles = allFiles.slice();
         updatePathDisplay(path);
-        renderFileList();
     } catch (error) {
         alert(`加载文件失败: ${error.message}`);
+    } finally {
+        loader.classList.remove('active'); // 隐藏加载动画
+        renderFileList();
     }
 }
 
