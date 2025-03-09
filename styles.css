@@ -90,6 +90,9 @@ nav {
     flex: 2;
     color: var(--main-color);
     word-break: break-all;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .file-name span {
@@ -106,6 +109,7 @@ nav {
 .file-date,
 .file-format {
     width: 140px;
+    color: #888;
 }
 
 .file-actions {
@@ -222,6 +226,7 @@ input[type="file"] {
 }
 
 .new-folder-btn {
+    min-width: 7.5em;
     height: 2.5em;
     border: none;
     border-radius: 4px;

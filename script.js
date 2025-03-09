@@ -245,17 +245,19 @@ async function flattenFiles(contents) {
     return files;
 }
 
+
+
 function renderFileList() {
     const list = [];
 
     list.push(`
         <div class="list-item">
-            <div style="width: 32px;"></div>
-            <div class="file-name" style="flex: 2; text-align: left; color: #000"><b>文件名</b></div>
+            <div style="min-width: 32px;"></div>
+            <div class="file-name" style="flex: 2; text-align: left; color: #222; font-weight: 600; min-width: 200px">文件名</div>
             <div class="file-info" style="display: flex; gap: 1rem; width: 35%; margin-right: 128px;">
-                <span class="file-format" style="width: 140px; text-align: left;"><b>文件格式</b></span>
-                <span class="file-size" style="width: 140px; text-align: left;"><b>文件大小</b></span>
-                <span class="file-date" style="width: 140px; text-align: left;"><b>上传时间</b></span>
+                <span class="file-format" style="text-align: left; color: #222; font-weight: 600;">文件格式</span>
+                <span class="file-size" style="text-align: left; color: #222; font-weight: 600;">文件大小</span>
+                <span class="file-date" style="text-align: left; color: #222; font-weight: 600;">上传时间</span>
             </div>
             <div class="file-actions" style="display: flex; gap: 0.5rem; margin-left: auto;"></div>
         </div>

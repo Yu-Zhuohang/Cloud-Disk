@@ -1,12 +1,9 @@
 /* ================= 响应式设计增强 ================= */
-/* 基准字号使用rem单位（1rem = 16px） */
-
-/* 超大屏幕（1600px+） */
 @media (min-width: 1600px) {
     body {
         font-size: 1.1rem;
     }
-    
+
     .main-box {
         max-width: 1440px;
         padding: 2.5rem;
@@ -28,14 +25,12 @@
     }
 }
 
-/* 中等屏幕（1024px-1599px） */
 @media (max-width: 1599px) and (min-width: 1024px) {
     .file-list {
         grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     }
 }
 
-/* 小屏幕平板（768px-1023px） */
 @media (max-width: 1023px) and (min-width: 769px) {
     nav {
         padding: 1rem 1.5rem;
@@ -63,10 +58,14 @@
     .file-list {
         grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     }
+
+    .file-name,
+    .file-info {
+        font-size: 15px;
+    }
 }
 
-/* 移动端横屏/小平板（600px-768px） */
-@media (max-width: 768px) and (min-width: 601px) {
+@media (max-width: 768px) and (min-width: 621px) {
     .file-list {
         grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
         gap: 0.75rem;
@@ -76,17 +75,29 @@
         font-size: 0.9rem;
     }
 
-    .file-icon {
-        font-size: 2rem;
-    }
-
     #currentPath {
         font-size: 0.9rem;
     }
+
+    .file-name {
+        font-size: 14px;
+    }
+
+    .file-info,
+    .file-size,
+    .file-date,
+    .file-format {
+        width: 0;
+        display: none;
+    }
+
+    .file-actions button {
+        padding: 0.3rem 0.7rem;
+        font-size: 12px;
+    }
 }
 
-/* 手机端竖屏（480px-600px） */
-@media (max-width: 600px) {
+@media (max-width: 620px) {
     body {
         font-size: 0.95rem;
     }
@@ -132,9 +143,25 @@
     .search-input {
         padding: 0.4rem 0.8rem;
     }
+
+    .file-name {
+        font-size: 14px;
+    }
+
+    .file-info,
+    .file-size,
+    .file-date,
+    .file-format {
+        width: 0;
+        display: none;
+    }
+
+    .file-actions button {
+        padding: 0.3rem 0.7rem;
+        font-size: 12px;
+    }
 }
 
-/* 小手机（<480px） */
 @media (max-width: 480px) {
     body {
         font-size: 0.9rem;
@@ -171,11 +198,8 @@
         padding: 0.75rem;
     }
 
-    .file-icon {
-        font-size: 1.75rem;
-    }
 
-    .action-bar select, 
+    .action-bar select,
     .action-bar button {
         padding: 0.5rem 0.75rem;
     }
@@ -183,9 +207,31 @@
     .current-path {
         font-size: 0.8rem;
     }
+
+    .file-name {
+        font-size: 14px;
+    }
+
+    .file-info,
+    .file-size,
+    .file-date,
+    .file-format {
+        width: 0;
+        display: none;
+    }
+
+    .file-actions button {
+        padding: 0.3rem 0.7rem;
+        font-size: 12px;
+    }
+
+    .search-input,
+    .new-folder-btn,
+    .file-type-filter {
+        height: 2.6em;
+    }
 }
 
-/* 超小手机（<360px） */
 @media (max-width: 360px) {
     body {
         font-size: 0.85rem;
@@ -206,18 +252,34 @@
     .file-item-name {
         font-size: 0.8rem;
     }
+
+    .file-name {
+        font-size: 14px;
+    }
+
+    .file-info,
+    .file-size,
+    .file-date,
+    .file-format {
+        width: 0;
+        display: none;
+    }
+
+    .file-actions button {
+        padding: 0.3rem 0.7rem;
+        font-size: 12px;
+    }
 }
 
-/* 高密度屏幕适配 */
-@media 
-(-webkit-min-device-pixel-ratio: 2), 
-(min-resolution: 192dpi) { 
+@media (-webkit-min-device-pixel-ratio: 2),
+(min-resolution: 192dpi) {
     .file-icon {
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
     }
-    
-    button, .file-item {
+
+    button,
+    .file-item {
         border-width: 0.5px;
     }
 }
