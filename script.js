@@ -192,39 +192,39 @@ async function loadFiles(path) {
     const loader = document.querySelector('.loading-overlay');
     if (loader) {
         loader.classList.add('active'); // 显示加载动画
-        try {
-            const response = await fetch(
-                `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${GITHUB_TOKEN}`,
-                        Accept: 'application/vnd.github+json'
-                    }
+    }
+    try {
+        const response = await fetch(
+            `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${GITHUB_TOKEN}`,
+                    Accept: 'application/vnd.github+json'
                 }
-            );
+            }
+        );
 
-            if (!response.ok) throw new Error('获取文件列表失败');
+        if (!response.ok) throw new Error('获取文件列表失败');
 
-            const contents = await response.json();
-            allFiles = await flattenFiles(contents);
+        const contents = await response.json();
+        allFiles = await flattenFiles(contents);
 
-            allFiles.sort((a, b) => {
-                if (a.type === b.type) {
-                    return a.name.localeCompare(b.name);
-                }
-                return a.type === 'dir' ? -1 : 1;
-            });
+        allFiles.sort((a, b) => {
+            if (a.type === b.type) {
+                return a.name.localeCompare(b.name);
+            }
+            return a.type === 'dir' ? -1 : 1;
+        });
 
-            originalAllFiles = allFiles.slice();
-            updatePathDisplay(path);
-        } catch (error) {
-            alert(`加载文件失败: ${error.message}`);
-        } finally {
+        originalAllFiles = allFiles.slice();
+        updatePathDisplay(path);
+    } catch (error) {
+        alert(`加载文件失败: ${error.message}`);
+    } finally {
+        if (loader) {
             loader.classList.remove('active'); // 隐藏加载动画
-            renderFileList();
         }
-    } else {
-        console.error('Loading overlay element not found');
+        renderFileList();
     }
 }
 
