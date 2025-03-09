@@ -190,37 +190,41 @@ async function flattenFiles(contents) {
 
 async function loadFiles(path) {
     const loader = document.querySelector('.loading-overlay');
-    try {
+    if (loader) {
         loader.classList.add('active'); // 显示加载动画
-        const response = await fetch(
-            `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}`,
-            {
-                headers: {
-                    Authorization: `Bearer ${GITHUB_TOKEN}`,
-                    Accept: 'application/vnd.github+json'
+        try {
+            const response = await fetch(
+                `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${GITHUB_TOKEN}`,
+                        Accept: 'application/vnd.github+json'
+                    }
                 }
-            }
-        );
+            );
 
-        if (!response.ok) throw new Error('获取文件列表失败');
+            if (!response.ok) throw new Error('获取文件列表失败');
 
-        const contents = await response.json();
-        allFiles = await flattenFiles(contents);
+            const contents = await response.json();
+            allFiles = await flattenFiles(contents);
 
-        allFiles.sort((a, b) => {
-            if (a.type === b.type) {
-                return a.name.localeCompare(b.name);
-            }
-            return a.type === 'dir' ? -1 : 1;
-        });
+            allFiles.sort((a, b) => {
+                if (a.type === b.type) {
+                    return a.name.localeCompare(b.name);
+                }
+                return a.type === 'dir' ? -1 : 1;
+            });
 
-        originalAllFiles = allFiles.slice();
-        updatePathDisplay(path);
-    } catch (error) {
-        alert(`加载文件失败: ${error.message}`);
-    } finally {
-        loader.classList.remove('active'); // 隐藏加载动画
-        renderFileList();
+            originalAllFiles = allFiles.slice();
+            updatePathDisplay(path);
+        } catch (error) {
+            alert(`加载文件失败: ${error.message}`);
+        } finally {
+            loader.classList.remove('active'); // 隐藏加载动画
+            renderFileList();
+        }
+    } else {
+        console.error('Loading overlay element not found');
     }
 }
 
@@ -249,8 +253,6 @@ async function flattenFiles(contents) {
     return files;
 }
 
-
-
 function renderFileList() {
     const list = [];
 
@@ -269,78 +271,78 @@ function renderFileList() {
 
     if (currentPath) {
         list.push(`
-            <div class="list-item">
-                <i class="file-icon fas fa-folder-open"></i>
-                <div class="file-name" onclick="navigateBack()" style="cursor:pointer;">..(返回上级)</div>
-                <div class="file-info">
-                    <span class="file-format"> - </span>
-                    <span class="file-size"> - </span>
-                    <span class="file-date"> - </span>
-                </div>
-                <div class="file-actions" style="width: 122px"></div>
-            </div>
-        `);
+    <div class="list-item">
+        <i class="file-icon fas fa-folder-open"></i>
+        <div class="file-name" onclick="navigateBack()" style="cursor:pointer;">..(返回上级)</div>
+        <div class="file-info">
+            <span class="file-format"> - </span>
+            <span class="file-size"> - </span>
+            <span class="file-date"> - </span>
+        </div>
+        <div class="file-actions" style="width: 122px"></div>
+    </div>
+`);
     }
 
     uploadQueue.forEach(task => {
         list.push(`
-            <div class="list-item uploading" data-task-id="${task.id}">
-                <i class="file-icon fas ${task.status === 'uploading' ? 'fa-spinner fa-spin' : 'fa-pause'}"></i>
-                <div class="file-name">${task.file.name}</div>
-                <div class="upload-progress">
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: ${task.progress}%"></div>
-                    </div>
-                    <span class="progress-percent">${task.progress}%</span>
-                </div>
-                <div class="upload-actions">
-                    ${task.status === 'uploading' ?
+    <div class="list-item uploading" data-task-id="${task.id}">
+        <i class="file-icon fas ${task.status === 'uploading' ? 'fa-spinner fa-spin' : 'fa-pause'}"></i>
+        <div class="file-name">${task.file.name}</div>
+        <div class="upload-progress">
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: ${task.progress}%"></div>
+            </div>
+            <span class="progress-percent">${task.progress}%</span>
+        </div>
+        <div class="upload-actions">
+            ${task.status === 'uploading' ?
                 `<button onclick="pauseUpload('${task.id}')"><i class="fas fa-pause"></i></button>` :
                 `<button onclick="resumeUpload('${task.id}')"><i class="fas fa-play"></i></button>`
             }
-                    <button onclick="cancelUpload('${task.id}')"><i class="fas fa-times"></i></button>
-                </div>
-            </div>
-        `);
+            <button onclick="cancelUpload('${task.id}')"><i class="fas fa-times"></i></button>
+        </div>
+    </div>
+`);
     });
 
     allFiles.forEach(item => {
         if (item.type === 'dir') {
             list.push(`
-                <div class="list-item">
-                    <i class="file-icon fas fa-folder" onclick="navigateTo('${item.path}')"></i>
-                    <div class="file-name">
-                        <span onclick="navigateTo('${item.path}')">${item.name}</span>
-                    </div>
-                    <div class="file-info">
-                        <span class="file-format"> - </span>
-                        <span class="file-size"> - </span>
-                        <span class="file-date"> - </span>
-                    </div>
-                    <div class="file-actions">
-                        <div style="width: 56px;"></div>
-                        <button onclick="deleteItem('${item.path}', '${item.sha}')">删除</button>
-                    </div>
-                </div>
-            `);
+        <div class="list-item">
+            <i class="file-icon fas fa-folder" onclick="navigateTo('${item.path}')"></i>
+            <div class="file-name">
+                <span onclick="navigateTo('${item.path}')">${item.name}</span>
+            </div>
+            <div class="file-info">
+                <span class="file-format"> - </span>
+                <span class="file-size"> - </span>
+                <span class="file-date"> - </span>
+            </div>
+            <div class="file-actions">
+                <div style="width: 56px;"></div>
+                <button onclick="deleteItem('${item.path}', '${item.sha}')">删除</button>
+            </div>
+        </div>
+    `);
         } else {
             list.push(`
-                <div class="list-item">
-                    <i class="file-icon fas ${getFileIcon(item.name)}" onclick="previewFile('${item.path}')"></i>
-                    <div class="file-name">
-                        <span onclick="previewFile('${item.path}')">${item.name}</span>
-                    </div>
-                    <div class="file-info">
-                        <span class="file-format">${getFileFormat(item.name)}</span>
-                        <span class="file-size">${formatSize(item.size)}</span>
-                        <span class="file-date">${formatDate(item.uploaded_at || item.updated_at)}</span>
-                    </div>
-                    <div class="file-actions">
-                        <button onclick="downloadFile('${item.path}')">下载</button>
-                        <button onclick="deleteItem('${item.path}', '${item.sha}')">删除</button>
-                    </div>
-                </div>
-            `);
+        <div class="list-item">
+            <i class="file-icon fas ${getFileIcon(item.name)}" onclick="previewFile('${item.path}')"></i>
+            <div class="file-name">
+                <span onclick="previewFile('${item.path}')">${item.name}</span>
+            </div>
+            <div class="file-info">
+                <span class="file-format">${getFileFormat(item.name)}</span>
+                <span class="file-size">${formatSize(item.size)}</span>
+                <span class="file-date">${formatDate(item.uploaded_at || item.updated_at)}</span>
+            </div>
+            <div class="file-actions">
+                <button onclick="downloadFile(event, '${item.path}')">下载</button>
+                <button onclick="deleteItem('${item.path}', '${item.sha}')">删除</button>
+            </div>
+        </div>
+    `);
         }
     });
 
@@ -547,7 +549,12 @@ function handleSearch() {
     renderFileList();
 }
 
-async function downloadFile(path) {
+async function downloadFile(event, path) {
+    const button = event.target;
+    const originalHTML = button.innerHTML;
+    button.innerHTML = '<i class="fas fa-spinner spinner"></i>';
+    button.classList.add('button-loading');
+
     try {
         const url = `https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/main/${path}`;
         const response = await fetch(url);
@@ -558,9 +565,12 @@ async function downloadFile(path) {
         link.href = URL.createObjectURL(blob);
         link.download = path.split('/').pop();
         link.click();
-        alert('文件下载已开始！');
+        await new Promise(resolve => setTimeout(resolve, 500)); // 稍作延迟让用户看到完成状态
     } catch (error) {
         alert(`下载失败: ${error.message}`);
+    } finally {
+        button.innerHTML = originalHTML;
+        button.classList.remove('button-loading');
     }
 }
 
