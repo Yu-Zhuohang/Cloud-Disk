@@ -26,6 +26,9 @@ async function getGitHubToken() {
         GITHUB_TOKEN = hexToAscii(config.GITHUB_TOKEN);
         REPO_OWNER = config.REPO_OWNER;
         REPO_NAME = config.REPO_NAME;
+
+        const usernameElement = document.getElementById('username');
+        usernameElement.textContent = config.USERNAME;
     } catch (error) {
         alert(`Error loading GitHub token: ${error.message}`);
     }
