@@ -1,6 +1,7 @@
 let GITHUB_TOKEN;
 let REPO_OWNER;
 let REPO_NAME;
+let DELETE_PASSWORD;
 let currentPath = '';
 let allFiles = [];
 let originalAllFiles = [];
@@ -26,6 +27,7 @@ async function getGitHubToken() {
         GITHUB_TOKEN = hexToAscii(config.GITHUB_TOKEN);
         REPO_OWNER = config.REPO_OWNER;
         REPO_NAME = config.REPO_NAME;
+        DELETE_PASSWORD = config.DELETE_PASSWORD;
 
         const usernameElement = document.getElementById('username');
         usernameElement.textContent = config.USERNAME;
@@ -33,6 +35,24 @@ async function getGitHubToken() {
         alert(`Error loading GitHub token: ${error.message}`);
     }
 }
+
+fetch('config.json')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        const USERNAME = data.USERNAME;
+        const USERNAMEElement = document.getElementById('username');
+        if (USERNAMEElement) {
+            USERNAMEElement.textContent = USERNAME;
+        }
+    })
+    .catch(error => {
+        console.error('Fetch error:', error);
+    });
 
 window.addEventListener('load', async function () {
     const nav = document.querySelector('nav');
@@ -42,6 +62,13 @@ window.addEventListener('load', async function () {
 
     await getGitHubToken();
     await init();
+});
+
+window.addEventListener('load', function () {
+    const nav = document.querySelector('nav');
+    const mainBox = document.querySelector('.main-box');
+    const navHeight = nav.offsetHeight;
+    mainBox.style.marginTop = navHeight + 'px';
 });
 
 function generateId() {
@@ -577,20 +604,17 @@ async function downloadFile(event, path) {
     }
 }
 
-// 添加密码验证相关变量
 let passwordVerified = false;
 let passwordVerifiedTime = 0;
 
-// 修改 deleteItem 函数
 async function deleteItem(path, sha) {
     if (!confirm(`确定要删除 ${path.split('/').pop()} 吗？`)) return;
 
-    // 检查是否需要验证密码
     const now = Date.now();
     const thirtyMinutes = 30 * 60 * 1000;
     if (!passwordVerified || now - passwordVerifiedTime > thirtyMinutes) {
         const password = prompt('请输入删除密码：');
-        if (password !== '123456') {
+        if (password !== DELETE_PASSWORD) {
             alert('密码错误或已取消，删除操作未执行。');
             return;
         }
@@ -685,3 +709,18 @@ const refreshIcon = document.getElementById('refresh-icon');
 refreshIcon.addEventListener('click', function () {
     location.reload();
 });
+
+
+fetch('config.json')
+    .then(response => response.json())
+    .then(data => {
+        const repoOwner = data.REPO_OWNER;
+        const repository = data.REPOSITORY;
+        const link = `https://${repoOwner}.github.io/${repository}/`;
+        const linkElement = document.getElementById('generated-link');
+        linkElement.href = link;
+        linkElement.textContent = link;
+    })
+    .catch(error => {
+        console.error('Error fetching config.json:', error);
+    });
