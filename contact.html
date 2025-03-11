@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub 云盘 - 联系我们</title>
+    <link rel="icon" href="Cloud-icon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="xiangyingshi.css">
+    <style>
+        :root {
+            --main-color: #5c2d91;
+            --bg-color: #f8f9fa;
+            --border-color: #e0e0e0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            user-select: none;
+            background: var(--bg-color);
+        }
+
+        nav {
+            background-color: var(--main-color);
+            padding: 1rem 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 2rem;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #ffd700;
+        }
+
+        .main-box {
+            padding: 2em 6em;
+            margin-top: 60px;
+        }
+
+        .contact-info {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact-info h2 {
+            color: var(--main-color);
+            margin-bottom: 1rem;
+        }
+
+        .contact-info p {
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-form {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+        }
+
+        .contact-form h2 {
+            color: var(--main-color);
+            margin-bottom: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            background: var(--main-color);
+            color: white;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        button:hover {
+            background: #723da7;
+        }
+
+        footer {
+            background-color: var(--main-color);
+            color: white;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 1023px) {
+            .main-box {
+                margin: 1.5rem;
+                padding: 1.5rem;
+            }
+
+            .nav-links a {
+                margin-left: 1.5rem;
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem 1.5rem;
+            }
+
+            .main-box {
+                margin: 1rem;
+                padding: 1rem;
+            }
+
+            button {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                font-size: 0.9rem;
+            }
+
+            nav {
+                padding: 0.5rem 0.75rem;
+            }
+
+            .main-box {
+                margin: 0.5rem;
+                padding: 0.75rem;
+            }
+
+            button {
+                padding: 0.3rem 0.6rem;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <div class="logo"><i id="refresh-icon" class="fa-solid fa-cloud"></i> <span id="username"></span></div>
+        <div class="nav-links">
+            <a href="index.html">首页</a>
+            <a href="help.html">帮助</a>
+            <a href="download.html">下载</a>
+            <a href="contact.html">联系</a>
+        </div>
+    </nav>
+
+    <div class="main-box">
+        <div class="contact-info">
+            <h2>联系信息</h2>
+            <p>邮箱：yuzhuohang2004@outlook.com</p>
+            <p>地址：湖北省武汉市洪山区南李路28号湖北工业大学</p>
+        </div>
+
+        <div class="contact-form">
+            <h2>联系表单</h2>
+            <form id="contactForm">
+                <div class="form-group">
+                    <label for="name">姓名</label>
+                    <input type="text" id="name" placeholder="请输入您的姓名">
+                </div>
+                <div class="form-group">
+                    <label for="email">邮箱</label>
+                    <input type="email" id="email" placeholder="请输入您的邮箱">
+                </div>
+                <div class="form-group">
+                    <label for="message">留言</label>
+                    <textarea id="message" placeholder="请输入您的留言" rows="5"></textarea>
+                </div>
+                <button type="button" onclick="sendEmail()">提交</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>© Hubei University of Technology @ Yu-Zhuohang</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        function sendEmail() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+
+            const subject = `来自 ${name} 的留言`;
+            const body = `姓名: ${name}\n邮箱: ${email}\n留言: ${message}`;
+
+            const mailtoLink = `mailto:yuzhuohang2004@outlook.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            window.location.href = mailtoLink;
+        }
+    </script>
+</body>
+
+</html>
