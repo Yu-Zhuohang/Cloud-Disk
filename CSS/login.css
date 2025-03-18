@@ -1,0 +1,314 @@
+:root {
+    --main-color: #5c2d91;
+    --bg-color: #f8f9fa;
+    --border-color: #e0e0e0;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --hover-color: #723da7;
+    --gradient-start: #5c2d91;
+    --gradient-end: #8a4dbf;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+    user-select: none;
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+.background-animation {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+    opacity: 0.7;
+}
+
+.background-animation div {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    animation: floatBubble 10s infinite;
+}
+
+@keyframes floatBubble {
+    0% {
+        transform: translateY(0) translateX(0);
+    }
+    50% {
+        transform: translateY(-100vh) translateX(50vw);
+    }
+    100% {
+        transform: translateY(0) translateX(100vw);
+    }
+}
+
+.background-animation div:nth-child(1) {
+    top: 20%;
+    left: 10%;
+    animation-duration: 12s;
+}
+
+.background-animation div:nth-child(2) {
+    top: 50%;
+    left: 30%;
+    animation-duration: 15s;
+}
+
+.background-animation div:nth-child(3) {
+    top: 70%;
+    left: 50%;
+    animation-duration: 10s;
+}
+
+.background-animation div:nth-child(4) {
+    top: 40%;
+    left: 70%;
+    animation-duration: 14s;
+}
+
+.container {
+    display: flex;
+    width: 900px;
+    height: 500px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px var(--shadow-color), 0 0 20px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.left-panel {
+    flex: 1;
+    background: url('../IMAGE/login-background.jpg') center/cover no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    color: white;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.left-panel::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1));
+    animation: rotate 10s linear infinite;
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.logo {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 1rem;
+    border-radius: 15px;
+    animation: float 4s ease-in-out infinite;
+    box-shadow: 0 0 50px rgba(255, 255, 255, 0.2);
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.left-panel h1 {
+    z-index: 10;
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    animation: textGlow 2s ease-in-out infinite alternate;
+}
+
+.left-panel p {
+    z-index: 10;
+}
+
+@keyframes textGlow {
+    0% {
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+    }
+    100% {
+        text-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
+    }
+}
+
+.left-panel p {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.right-panel {
+    flex: 0.7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+.login-box {
+    width: 100%;
+    max-width: 300px;
+}
+
+.login-box h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: var(--main-color);
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.form-group input:focus {
+    border-color: var(--main-color);
+    box-shadow: 0 0 0 3px rgba(92, 45, 145, 0.1);
+    outline: none;
+}
+
+.form-group button {
+    width: 100%;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 8px;
+    background: var(--main-color);
+    color: white;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+.form-group button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0));
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.5s ease;
+    border-radius: 50%;
+}
+
+.form-group button:hover {
+    background: var(--hover-color);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(92, 45, 145, 0.3);
+}
+
+.form-group button:active {
+    transform: translateY(0);
+}
+
+.form-group button:active::before {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.error-message {
+    color: #dc3545;
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    text-align: center;
+    display: none;
+    animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-5px);
+    }
+    50% {
+        transform: translateX(5px);
+    }
+    75% {
+        transform: translateX(-5px);
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: 80%;
+        height: auto;
+    }
+
+    .left-panel {
+        display: none;
+    }
+
+    .right-panel {
+        flex: 1;
+    }
+}

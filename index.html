@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub 云盘</title>
+    <link rel="icon" href="IMAGE/Cloud-icon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="CSS/styles.css">
+    <link rel="stylesheet" href="CSS/xiangyingshi.css">
+</head>
+
+<body>
+    <nav>
+        <div class="logo"><i id="refresh-icon" class="fa-solid fa-cloud"></i> <span id="username"></span></div>
+        <div class="nav-links">
+            <a href="index.html">首页</a>
+            <a href="HTML/help.html">帮助</a>
+            <!-- <a href="HTML/download.html">下载</a> -->
+            <a href="HTML/contact.html">联系</a>
+            <a href="HTML/login.html">登录</a>
+        </div>
+    </nav>
+
+    <div class="main-box">
+        <div class="upload-area" id="uploadArea">
+            <p><button id="browseBtn">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>&nbsp;&nbsp;上传文件&nbsp;
+                </button><br><br>或拖放文件至此处</p>
+            <input type="file" id="fileInput" multiple>
+        </div>
+
+        <div class="action-bar">
+            <input type="text" class="search-input" id="searchInput" placeholder="搜索文件">
+            <select id="fileTypeFilter" class="file-type-filter">
+                <option value="all">所有文件</option>
+                <option value="dir">文件夹</option>
+                <option value="pdf">PDF</option>
+                <option value="image">图片</option>
+                <option value="doc">文档</option>
+                <option value="xls">表格</option>
+                <option value="ppt">演示文稿</option>
+                <option value="archive">压缩包</option>
+                <option value="other">其他</option>
+            </select>
+            <button class="new-folder-btn" onclick="createNewFolder()">新建文件夹</button>
+        </div>
+
+        <div class="current-path" id="currentPath">当前路径：/</div>
+        <div class="file-list" id="fileList">
+            <div class="loading-overlay">
+                <i class="fas fa-spinner loading-spinner"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- <footer>
+        <p>© https://github.com/Yu-Zhuohang</p>
+        <p style="margin-top:0.5rem;font-size:0.9em;">
+            联系我们：yuzhuohang2004@outlook.com
+        </p>
+    </footer> -->
+
+    <script>
+        const isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true';
+        if (!isLoggedIn) {
+            window.location.href = 'HTML/login.html';
+        }
+    </script>
+    <script src="JS/script.js"></script>
+</body>
+
+</html>
