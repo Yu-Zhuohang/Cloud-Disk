@@ -15,6 +15,22 @@
             height: 1230px;
             border: none;
         }
+
+        .resume-image {
+            display: none;
+            width: 100%;
+            height: auto;
+        }
+
+        @media (max-width: 768px) {
+            iframe {
+                display: none;
+            }
+
+            .resume-image {
+                display: block;
+            }
+        }
     </style>
 </head>
 
@@ -31,6 +47,7 @@
 
     <div class="main-box">
         <iframe src="Resume.html" title="Resume"></iframe>
+        <img class="resume-image" src="https://yu-zhuohang.github.io/Document-Library/%E7%AE%80%E5%8E%86/%E4%BD%99%E5%8D%93%E8%88%AA%20-%20%E8%80%83%E7%A0%94%E5%A4%8D%E8%AF%95%E7%AE%80%E5%8E%86.png">
     </div>
 
     <footer>
